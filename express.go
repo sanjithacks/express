@@ -1,4 +1,4 @@
-package gee
+package express
 
 import (
 	"log"
@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// HandlerFunc defines the request handler used by gee
+// HandlerFunc defines the request handler used by Express
 type HandlerFunc func(*Context)
 
 // Engine implement the interface of ServeHTTP
@@ -25,7 +25,7 @@ type (
 	}
 )
 
-// New is the constructor of gee.Engine
+// New is the constructor of Express.Engine
 func Express() *Engine {
 	engine := &Engine{router: newRouter()}
 	engine.RouterGroup = &RouterGroup{engine: engine}
