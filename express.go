@@ -26,7 +26,7 @@ type (
 )
 
 // New is the constructor of gee.Engine
-func New() *Engine {
+func Express() *Engine {
 	engine := &Engine{router: newRouter()}
 	engine.RouterGroup = &RouterGroup{engine: engine}
 	engine.groups = []*RouterGroup{engine.RouterGroup}
@@ -35,7 +35,7 @@ func New() *Engine {
 
 // Default use Logger() & Recovery middlewares
 func Default() *Engine {
-	engine := New()
+	engine := Express()
 	engine.Use(Logger(), Recovery(nil))
 	return engine
 }
@@ -92,6 +92,6 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	engine.router.handle(c)
 }
 
-func (engine *Engine) Handle(w http.ResponseWriter, req *http.Request)  {
+func (engine *Engine) Handle(w http.ResponseWriter, req *http.Request) {
 	engine.ServeHTTP(w, req)
 }
