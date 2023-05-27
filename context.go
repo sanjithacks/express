@@ -3,6 +3,7 @@ package express
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -41,6 +42,20 @@ func (c *Context) Next() {
 	for ; c.index < s; c.index++ {
 		c.handlers[c.index](c)
 	}
+}
+
+func (c *Context) BodyParser(data interface{}) error {
+	body, err := io.ReadAll(c.Req.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read request body: %v", err)
+	}
+
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		return fmt.Errorf("failed to parse JSON: %v", err)
+	}
+
+	return nil
 }
 
 func (c *Context) Fail(code int, err string) {
