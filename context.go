@@ -58,6 +58,10 @@ func (c *Context) BodyParser(data interface{}) error {
 	return nil
 }
 
+func (c *Context) Get(key string) string {
+	return c.Req.Header.Get(key)
+}
+
 func (c *Context) Fail(code int, err string) {
 	c.index = len(c.handlers)
 	c.JSON(code, H{"message": err})
